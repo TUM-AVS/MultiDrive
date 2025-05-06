@@ -1,0 +1,6 @@
+beamngpy==1.30
+click==8.1.7
+commonroad-io==2024.2
+commonroad-vehicle-models==3.0.2
+enlighten==1.14.1
+scipy==1.13.0
