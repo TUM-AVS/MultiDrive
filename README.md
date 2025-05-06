@@ -228,12 +228,6 @@ Install the python deps from the `requirements.txt` file:
 pip install -r requirements.txt
 ```
 
-Some of the components install a version of SciPy that is incompatible with FrenetiX.  So we need to force the expected version of the library:
-
-```
-pip install scipy==1.13.0
-```
-
 ## Smoke test the installation
 
 The main entry point of MultiDrive is the `cli.py` script which implements
