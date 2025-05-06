@@ -256,11 +256,11 @@ Options:
   --help                    Show this message and exit.
 
 Commands:
-  simulate                
-  cosimulate-with-beamng  
-  compare                 
-  plot-simulation           
-  animate-simulation
+  animate-simulation      Combine the frames into an high-quality gif
+  compare                 Compute the difference of the aligned...
+  cosimulate-with-beamng  Simulate the CommonRoad scenario using...
+  plot-simulation         Plot all the frames of the executed scenario
+  simulate                Simulate the CommonRoad scenario using CommonRoad
 ```
 
 Each command can be invoked with the `--help` option to list all the paramters and options. Our automation pipeline wraps those commands to ease their usage, but each command can be invoked manually from the command line.
@@ -281,21 +281,23 @@ The code to generate scenarios covering the two parameters space can be found in
 # Automation Pipeline
 
 To automate the execution, analysis, and visualization of scenarios and simulations, we rely on Make a widely used and well known utility.
-Our make file searches inside the `scenarios` folder for possible scenarios (.xml files). For each scenario, it creates several
-targets that invoke the `cli.py` commands. Targets may depend on one another, and Make manages them consistently.
+Our make file searches (recursively) inside the `scenarios` folder for possible scenarios (`.xml` files).
+For each scenario, it creates several targets that invoke the `cli.py` commands. Targets may depend on one another, and Make manages them consistently.
 
-Executing the following command causes the scenario <Scenario_X> to be simulated, co-simulated, plotted, and animated:
+Targets follow the pattern:
+- simulate-<SCENARIO_NAME>: simulates the CommonRoad scenario in CommonRoad and stores the results in `experiments-car/<SCENARIO_NAME>/0001`
+- cosimulate_with_bng-<SCENARIO_NAME>: simulates the CommonRoad scenario in BeamNG and stores the results in `experiments-car/<SCENARIO_NAME>/0002`
+- plot-simulated-<SCENARIO_NAME>: generates the plots visualizing the scenario low-fidelity execution at every time step and stores the plots in `experiments-car/<SCENARIO_NAME>/simulated-plots`
+- plot-cosimulated_with_bng-<SCENARIO_NAME>: generates the plots visualizing the scenario high-fidelity execution at every time step and stores the plots in `experiments-car/<SCENARIO_NAME>/cosimulated_with_bng-plots`
+- animate-simulated-<SCENARIO_NAME>: creates the `experiments-car/<SCENARIO_NAME>/simulated-scenario.gif` from the output of the `plot-simulated` command
+- animate-cosimulated_with_bng-<SCENARIO_NAME>: creates the `experiments-car/<SCENARIO_NAME>/cosimulated_with_bng-scenario.gif` from the output of the `plot-cosimulated_with_bng` command
+- animate-<SCENARIO_NAME>: merge the plots generated from the previous commands and creates the comparative `experiments-car/<SCENARIO_NAME>/scenario.gif`
+- analyze-<SCENARIO_NAME>: loads the low- and high-fidelity simulation data, aligns the trajectory for each vehicle, and computes the error metrics (position, rotation, speed, etc.). Results are the `simulated_vs_cosimulated_with_bng.csv` and the plots inside the `plots` folder within `experiments-car/<SCENARIO_NAME>`
+
+For instance, the following command causes the scenario `single-agent.xml` to be simulated, co-simulated, plotted, and animated:
 
 ```
-make animate-<Scenario_X>
-```
-
-The command will store all the outputs under the `experiments/<Scenario_X>` folder.
-
-Executing the following command causes the scenario <Scenario_X> to be simulated and co-simualted and differences between the two computed:
-
-```
-make analyze-<Scenario_X>
+make single-agent
 ```
 
 > NOTE: Make ensures that commands already executed will not be executed again.
