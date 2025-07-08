@@ -295,3 +295,40 @@ make single-agent
 ```
 
 > NOTE: Make ensures that commands already executed will not be executed again.
+
+## Contributors
+
+<details>
+<summary>Click to expand</summary>
+
+- [Marc Kaufeld](mailto:marc.kaufeld@tum.de) (corresponding author)
+- Korbinian Moller
+- Alessio Gambi
+- Paolo Arcaini
+- Johannes Betz
+
+</details>
+
+
+## Citation
+
+<details>
+<summary>Click to expand</summary>
+
+If you use this code or the ideas in your research, please cite:
+
+```bibtex
+@article{Kaufeld-MultiDrive2025,
+  doi = {10.48550/ARXIV.2505.13959},
+  author = {Kaufeld,  Marc and Moller,  Korbinian and Gambi,  Alessio and Arcaini,  Paolo and Betz,  Johannes},
+  title = {MultiDrive: A Co-Simulation Framework Bridging 2D and 3D Driving Simulation for AV Software Validation},
+  publisher = {arXiv},
+  year = {2025}
+}
+```
+
+</details>
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
